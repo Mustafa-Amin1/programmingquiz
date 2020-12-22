@@ -1,0 +1,16 @@
+// bootstrap 4 
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+
+
+//partials
+@import '../theme/partials/buttons.scss';
+@import '../theme/partials/nav.scss';
+@import '../theme/partials/links.scss';
+
+*{
+    box-sizing: border-box;
+} 
+html {
+    font-size: 10px;
+}
