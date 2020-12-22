@@ -2,39 +2,31 @@
   <div id="quizBox">
     <div class="container">
         <b-card-group deck>
-            <b-card header-tag="header" footer-tag="footer">
+        <div v-for="(question, index) in questions" :key="index" class="d-block w-100">
+            <b-card header-tag="header" footer-tag="footer" v-if="index==questionIndex">
+
                 <template #header>
-                    <h2 class="mb-0">Question ?</h2>
+                    <h2 class="mb-0">{{question.question}}</h2>
                 </template>
                 <!-- <b-card-text>form</b-card-text> -->
                 <div id="card__body">
-                    <div class=" card__body-item m-auto p-3">
-                        <input class="" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    <div class=" card__body-item m-auto p-3 w-100" v-for="(answer, index) in question.answers" :key="index">
+                        <input class="" type="radio" name="exampleRadios" id="exampleRadios1" :value="inputValue+1" checked>
                         <label class="form-check-label pl-2" for="exampleRadios1">
-                            Default radio
+                            {{answer}}
                         </label>
                     </div>
-                    <div class="card__body-item   m-auto p-3">
-                        <input class="" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                        <label class="form-check-label pl-2" for="exampleRadios1">
-                            Default radio
-                        </label>
-                    </div>
-                    <div class="card__body-item   m-auto p-3">
-                        <input class="" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                        <label class="form-check-label pl-2" for="exampleRadios1">
-                            Default radio
-                        </label>
-                    </div>
+               
                 </div>
                 <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
                 <template #footer>
                     <div class="row justify-content-start p-2 align-items-center">
-                        <b-button class="mx-2"><i class="fas fa-angle-left"></i> Previous</b-button>
-                        <b-button class="mx-2"><i class="fas fa-angle-right"></i> Next</b-button>
+                        <b-button class="mx-2" @click="prevBtn(index)"><i class="fas fa-angle-left"></i> Previous</b-button>
+                        <b-button class="mx-2" @click="nextBtn(index)"><i class="fas fa-angle-right" ></i> Next</b-button>
                     </div>
                 </template>
             </b-card>
+        </div>
         </b-card-group>
     </div>
   </div>

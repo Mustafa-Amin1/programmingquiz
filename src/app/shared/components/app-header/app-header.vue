@@ -5,13 +5,11 @@
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item > <a role="button">Previous</a> </b-nav-item>
-        <b-nav-item ><i class="fas fa-info-circle pr-2"></i> <i class="fas fa-check-circle pr-2"></i> 1 / 20</b-nav-item>
-        <b-nav-item ><a role="button" @click="alertFn">Next</a></b-nav-item>
+        <b-nav-item > <a role="button" >Previous</a> </b-nav-item>
+        <b-nav-item ><i class="fas fa-info-circle pr-2"></i> <i class="fas fa-check-circle pr-2"></i> {{getUpdatedQuestion+1}} / {{getQuestionsLength}}</b-nav-item>
+        <b-nav-item ><a role="button" >Next</a></b-nav-item>
         <b-nav-item ><b-link id="resultBtn" role="button" :disabled="isDisabled" @click="resultFn">Result</b-link></b-nav-item>
-
       </b-navbar-nav>
-
     </b-collapse>
   </b-navbar>
   </section>
