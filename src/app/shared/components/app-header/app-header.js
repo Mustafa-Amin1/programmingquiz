@@ -7,6 +7,7 @@ export default {
             isDisabled:true,
         }
     },
+    props:['questionsLength'],
     methods: {
         // nextBtn(index) {
         //     if(index >= 0 && index <= 8){
@@ -27,8 +28,10 @@ export default {
         // }
     },
     computed:{
-        ...mapGetters(["getUpdatedQuestion"]),
-        ...mapGetters(["getQuestionsLength"]),
+        ...mapGetters(['getnextQuestion']),
+        ...mapGetters(['getQuestionsLength']),
+        ...mapGetters(['getCurrentQuestionId']),
+        
     },
     watch:{
         isDisabled:function(val){
@@ -44,6 +47,10 @@ export default {
         }
     },
     mounted() {
-        this.questionIndex = this.$store.getters.getUpdatedQuestion
+        if(this.$route.params.id){
+            // this.$store.commit('setCurrentQuestionId', { currentQuestionId: this.$route.params.id  }); 
+        }
+        // this.questionIndex = this.$store.getters.getUpdatedQuestion
+
     }
 }

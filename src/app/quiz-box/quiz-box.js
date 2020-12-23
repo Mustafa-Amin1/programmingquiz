@@ -1,55 +1,66 @@
-import axios from 'axios'
+import { mapGetters } from 'vuex'
 
 export default {
     name:'quize-box',
     data() {
         return {
-            questions:[],
-            questionIndex: 1,
-            inputValue:1
+            currentQuestion: {},
+            currentId:null,
+            questionsArr:[]
         }
     },
+    // props:['questionsArr'],
     methods:{
-        hello(){
-            console.log(this.questions);
-        },
-        nextBtn(index) {
-            if(index >= 0 && index <= 8){
-                index++
-                this.questionIndex = index
-                console.log(index);
-                this.$store.commit('UpdateQuestion', { questionIndex: index, questionsNumber:this.questions.length}); 
+
+        nextBtn() {
+            if(this.currentId > 0 && this.currentId <= 9){
+            this.currentId++
+            for(let question of this.questionsArr){
+                if(question.id == this.currentId){
+                    this.$store.commit('setnextQuestion', { nextQuestion: question  }); 
+                    this.$store.commit('setCurrentQuestionId', { currentQuestionId: this.currentId  }); 
+
+                }
             }
-    
-        },
-        prevBtn(index) {
-            if(index > 0 && index <= 10){
-                index--
-                this.questionIndex = index
-                this.$store.commit('UpdateQuestion', { questionIndex: index, questionsNumber:this.questions.length});
+            this.$router.push({name:'question',params:{id:this.currentId }})
             }
+
+        },
+        prevBtn() {
+            if(this.currentId > 1 && this.currentId <= 10){
+                this.currentId--
+                for(let question of this.questionsArr){
+                    if(question.id == this.currentId){
+                        this.$store.commit('setnextQuestion', { nextQuestion: question  }); 
+                        this.$store.commit('setCurrentQuestionId', { currentQuestionId: this.currentId  }); 
+
+                    }
+                }
+                this.$router.push({name:'question',params:{id:this.currentId }})
+                }
  
         }
     },
+    computed:{
+            //get current question
+            ...mapGetters(['getnextQuestion'])
+    },
     mounted() {
-        axios.get('https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple')
-        .then(response => {
-            console.log(response.data.results);
-             this.questions = response.data.results
-            for(let question of this.questions){
-                question.answers =[question.correct_answer, ...question.incorrect_answers ]
+        this.currentId = this.$route.params.id
+        this.questionsArr =  this.$store.getters.getQuestions
+        for(let question of this.questionsArr){
+            if(question.id == this.currentId){
+                console.log(question);
+                this.$store.commit('setnextQuestion', { nextQuestion: question  }); 
+                 this.currentQuestion = this.$store.getters.getnextQuestion 
             }
-            return console.log(this.questions);
-        })
-        .catch(err => {
-            if(err){
-                return alert('Api has an error')
-            }
-        })
-        // get question number
-        this.questionIndex = this.$store.getters.getUpdatedQuestion
+        }
+        // if no object route to home page
+        if(!this.currentQuestion.id){
+           window.onload= this.$router.push({name:'Home'})
+           console.log(this.currentQuestion);
 
-
+        }
     },
     components: {
 

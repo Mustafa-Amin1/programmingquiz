@@ -4,7 +4,7 @@
     <app-header></app-header>
 
     <!-- router view -->
-    <router-view />
+    <router-view :questionsArr="questionsArr" />
 
 
 
@@ -16,9 +16,19 @@ import AppHeader from "../app/shared/components/app-header/app-header.vue";
 
 export default {
   name: "app",
+  data() {
+    return {
+      questionsArr:[],
+    }
+  },
   components: {
     "app-header": AppHeader,
   },
+  mounted() {
+    //get questions by store
+
+
+  }
 };
 </script>
 <style lang="scss">
