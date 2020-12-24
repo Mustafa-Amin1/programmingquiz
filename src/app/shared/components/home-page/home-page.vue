@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div class="container">
-      <b-form  v-if="show" @submit="startQuiz">
+      <b-form  v-if="show" @submit.prevent="startQuiz">
          <b-form-group id="input-group-1" label="Choose difficulty:" label-for="input-3">
           <b-form-select
             id="input-3"
@@ -21,12 +21,10 @@
 
 
         <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
       </b-form>
       <b-card class="mt-3" header="Form Data Result">
         <pre class="m-0">{{ form }}</pre>
       </b-card>
-      <button @click="startQuiz" class="btn btn-primary">Start Quiz</button>
     </div>
   </div>
 </template>

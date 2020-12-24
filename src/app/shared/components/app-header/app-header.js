@@ -9,28 +9,45 @@ export default {
     },
     props:['questionsLength'],
     methods: {
-        // nextBtn(index) {
-        //     if(index >= 0 && index <= 8){
-        //         index++
-        //         this.questionIndex = index
-        //         console.log(index);
-        //         this.$store.commit('UpdateQuestion', { questionIndex: index, questionsNumber:this.questions.length}); 
-        //     }
-    
-        // },
-        // prevBtn(index) {
-        //     if(index > 0 && index <= 10){
-        //         index--
-        //         this.questionIndex = index
-        //         this.$store.commit('UpdateQuestion', { questionIndex: index, questionsNumber:this.questions.length});
-        //     }
- 
-        // }
+        nextBtn() {
+            let questionId =this.$route.params.id
+            if (questionId > 0 && questionId <= this.getQuestions.length - 1) {
+                questionId++
+                for (let question of this.getQuestions) {
+                    if (question.id == questionId) {
+                        this.$store.commit('setnextQuestion', { nextQuestion: question });
+                        this.$store.commit('setCurrentQuestionId', { currentQuestionId: questionId });
+                    }
+                }
+                //handle duplicated route
+                // if( this.$route.params.id == questionId ){
+                    // this.$router.push({ name: 'question', params: { id: questionId++ } })
+                // }else{
+                    this.$router.push({ name: 'question', params: { id: questionId } })
+                // }
+            }
+
+        },
+        prevBtn() {
+            let questionId =this.$route.params.id
+            if (questionId > 1 && questionId <= this.getQuestions.length) {
+                questionId--
+                for (let question of this.getQuestions) {
+                    if (question.id == questionId) {
+                        this.$store.commit('setnextQuestion', { nextQuestion: question });
+                        this.$store.commit('setCurrentQuestionId', { currentQuestionId: questionId });
+                    }
+                }
+            this.$router.push({ name: 'question', params: { id: questionId } })          
+        }
+
+        },
     },
     computed:{
         ...mapGetters(['getnextQuestion']),
-        ...mapGetters(['getQuestionsLength']),
+        ...mapGetters(['getQuestions']),
         ...mapGetters(['getCurrentQuestionId']),
+        ...mapGetters(['gettQuizStatue']),
         
     },
     watch:{

@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 //components
 import Home from '@/app/shared/components/home-page/home-page.vue'
-import question from '@/app/quiz-box/quiz-box.vue'
+import Question from '@/app/quiz-box/quiz-box.vue'
+import Result from '@/app/result/result.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -14,7 +15,12 @@ const routes = [
   {
     path: '/question/:id',
     name: 'question',
-    component: question,
+    component: Question,
+  },
+    {
+    path: '/result',
+    name: 'result',
+    component: Result,
   },
   // {
   //   path: '/about',

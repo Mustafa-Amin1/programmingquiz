@@ -4,18 +4,18 @@
             <b-card-group deck>
             <div class="d-block w-100">
                 <b-card header-tag="header" footer-tag="footer" v-if="getnextQuestion">
-
                     <template #header>
                         <h2 class="mb-0">{{getnextQuestion.question}}</h2>
                     </template>
-                    <!-- <b-card-text>form</b-card-text> -->
                     <div id="card__body">
                         <div class=" card__body-item m-auto p-3 w-100" v-for="(answer, index) in getnextQuestion.answers" :key="index">
-                            <input class="" type="radio" name="exampleRadios" id="exampleRadios1" :value="1" checked>
-                            <label class="form-check-label pl-2" for="exampleRadios1">
-                                {{answer}}
-                            </label>
+                            <div class="container-fluid">
+                            <b-form-group  v-slot="{ ariaDescribedby }" class="row align-items-baseline">
+                            <b-form-radio :name="'radio'+getnextQuestion.id" v-model="choosed[getnextQuestion.id-1]" :aria-describedby="ariaDescribedby"  :value="answer" @change="radioChoosed(answer,getnextQuestion.id)" checked size="lg">{{answer}}</b-form-radio>
+                            </b-form-group>
+                            </div>
                         </div>
+                        
                     </div>
                     <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
                     <template #footer>

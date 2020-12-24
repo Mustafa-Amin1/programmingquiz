@@ -13,13 +13,14 @@ export default new Vuex.Store({
     questionLength:null,
     nextQuestion:{},
     currentQuestionId:0,
-    apiOptions:{}
-    // questionIndex:null,
-    // totalQuestions:null
+    apiOptions:{},
+    questionAnswer:[],
+    isFinished:false
+
   },
   mutations: {
     setApiOptions(state, value) {
-      state.apiOptions = value
+      state.apiOptions = value.apiOptions
     },
     setQuestions(state, value) {
       state.questions = value
@@ -32,6 +33,12 @@ export default new Vuex.Store({
     },
     setCurrentQuestionId( state, value) {
       state.currentQuestionId = value.currentQuestionId
+    },
+    setQuestionAnswer( state, value) {
+      state.questionAnswer = value.questionAnswer
+    },
+    setQuizStatue( state, value) {
+      state.isFinished = value.isFinished
     }
   },
   getters: {
@@ -50,15 +57,21 @@ export default new Vuex.Store({
     ,
     getCurrentQuestionId: state => {
       return state.currentQuestionId
+    }  ,
+    gettQuestionAnswer: state => {
+      return state.questionAnswer
+    }  ,
+    gettQuizStatue: state => {
+      return state.isFinished
     }
 
   },
   actions: {
-     async getApiData (store) {
+      getApiData (store) {
        let apiOptions = store.state.apiOptions
        console.log(apiOptions);
        console.log(`https://opentdb.com/api.php?amount=${apiOptions.amount}&category=18&difficulty=${apiOptions.difficulty}&type=multiple`);
-        return await axios.get(`https://opentdb.com/api.php?amount=${apiOptions.amount}&category=18&difficulty=${apiOptions.difficulty}&type=multiple`)
+        return  axios.get(`https://opentdb.com/api.php?amount=${apiOptions.amount}&category=18&difficulty=${apiOptions.difficulty}&type=multiple`)
           .then( response => {
              for (let [index, result] of response.data.results.entries()) {
               result.id = index+1

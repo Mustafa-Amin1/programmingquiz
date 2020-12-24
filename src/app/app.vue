@@ -24,12 +24,10 @@ export default {
   components: {
     "app-header": AppHeader,
   },
-  mounted() {
-    //get questions by store
-
-
-  }
 };
 </script>
 <style lang="scss">
+*{
+  font-size: 1.7rem;
+}
 </style>
