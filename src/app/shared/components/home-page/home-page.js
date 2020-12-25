@@ -7,8 +7,8 @@ export default {
                 difficulty: null,
                 amount: null
             },
-            difficulty: [{ text: 'Select difficulty', value: 'hard' }, 'easy', 'hard', 'medium'],
-            amount: [{ text: 'Select amount', value: '10' }, '10', '20', '30'],
+            difficulty: [{ text: 'Select difficulty', value: null}, 'easy', 'hard', 'medium'],
+            amount: [{ text: 'Select amount', value: null }, '10', '20', '30'],
             show: true,
             questionsArr: []
         }

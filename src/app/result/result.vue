@@ -86,8 +86,6 @@
     thead-light th:nth-last-child(4) {
       width: 15%;
     }
-    tbody tr td:nth-child(1) {
-    }
   }
 }
 .wrongAnswer {

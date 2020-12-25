@@ -27,7 +27,5 @@ export default {
 };
 </script>
 <style lang="scss">
-*{
-  font-size: 1.7rem;
-}
+
 </style>

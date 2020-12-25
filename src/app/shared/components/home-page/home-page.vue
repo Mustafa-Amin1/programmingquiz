@@ -22,12 +22,12 @@
 
         <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
-      <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-      </b-card>
     </div>
   </div>
 </template>
 <script src="./home-page.js"></script>
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+*{
+  font-size: 1.7rem
+}
 </style>
