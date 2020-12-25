@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 //components
-import Home from '@/app/shared/components/home-page/home-page.vue'
-import Question from '@/app/quiz-box/quiz-box.vue'
-import Result from '@/app/result/result.vue'
+const Home = () => import('@/app/shared/components/home-page/home-page.vue')
+const Question = () => import('@/app/quiz-box/quiz-box.vue')
+const Result = () => import('@/app/result/result.vue')
+// const store = () => import('../store')
+import store  from '../store'
 Vue.use(VueRouter)
 
 const routes = [
@@ -21,15 +24,25 @@ const routes = [
     path: '/result',
     name: 'result',
     component: Result,
+    beforeEnter(to,from,  next) {
+      if(store.getters.getQuestions.length > 0){
+        if(store.getters.getResults.userResults.length > 0){
+          if(store.getters.gettQuestionAnswer.length === store.getters.getQuestions.length) {
+            next();
+          }else{
+            alert("you didn't finish your quiz")
+          }
+        }else {
+          alert('you must submit your quiz by result button')
+        }
+        
+      }else {
+        alert('start your quiz to get your result')
+      }
+
+    }
   },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
+
 ]
 
 const router = new VueRouter({

@@ -15,7 +15,11 @@ export default {
     },
     methods: {
         startQuiz() {
+            //empty answers Array 
+            this.$store.commit('setQuestionAnswer', { questionAnswer: {} });
+            this.$store.commit('setQuizStatue', { isFinished: false });
             this.$store.commit('setApiOptions', { apiOptions: this.form });
+            // get data from api
             this.$store.dispatch("getApiData").then(results => {
                 this.questionsArr = results
                 let index = 1

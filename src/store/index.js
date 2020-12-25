@@ -1,5 +1,4 @@
 import Vue from 'vue'
-// import { axios } from 'vue/types/umd'
 import Vuex from 'vuex'
 import axios from 'axios'
 
@@ -9,14 +8,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    userResults:[],
     questions:[],
     questionLength:null,
     nextQuestion:{},
     currentQuestionId:0,
     apiOptions:{},
     questionAnswer:[],
-    isFinished:false
-
+    isFinished:false,
+    score:0
   },
   mutations: {
     setApiOptions(state, value) {
@@ -39,7 +39,11 @@ export default new Vuex.Store({
     },
     setQuizStatue( state, value) {
       state.isFinished = value.isFinished
-    }
+    },
+    setResults(state, value) {
+      state.userResults = value.userResults
+      state.score = value.score
+    },
   },
   getters: {
     getapiOptions: state => {
@@ -63,6 +67,12 @@ export default new Vuex.Store({
     }  ,
     gettQuizStatue: state => {
       return state.isFinished
+    },
+    getResults: state => {
+      return {
+        userResults: state.userResults,
+        score: state.score,
+      }
     }
 
   },
@@ -75,6 +85,7 @@ export default new Vuex.Store({
           .then( response => {
              for (let [index, result] of response.data.results.entries()) {
               result.id = index+1
+              //concat incorrect and correct answers
               result.answers =[result.correct_answer, ...result.incorrect_answers ]
             }
             store.commit('setQuestions', response.data.results)
@@ -86,30 +97,5 @@ export default new Vuex.Store({
 
 })
 
-
-// export default new Vuex.Store({
-//   state: {
-//     questionIndex:0,
-//     questionsNumber:10
-//   },
-//   mutations: {
-//     UpdateQuestion(state, value) {
-//       state.questionIndex = value.questionIndex;
-//       state.questionsNumber = value.questionsNumber;
-//     }
-//   },
-//   getters: {
-//     getUpdatedQuestion: state => {
-//       return  state.questionIndex
-//     },
-//     getQuestionsLength :state => {
-//       return state.questionsNumber
-//     }
-//   },
-//   actions: {
-//   },
-//   modules: {
-//   }
-// })
 
 

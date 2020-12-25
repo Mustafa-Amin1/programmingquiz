@@ -1,5 +1,4 @@
 import { mapGetters } from 'vuex'
-
 export default {
     name: 'quize-box',
     data() {
@@ -8,7 +7,9 @@ export default {
             currentQuestion: {},
             currentId: null,
             questionsArr: [],
-            answersArr: []
+            answersArr: [],
+            myResults: [],
+            totalPointes: 0,
         }
     },
     methods: {
@@ -31,7 +32,7 @@ export default {
             }
         },
         nextBtn() {
-            let questionId =this.$route.params.id
+            let questionId = this.$route.params.id
             if (questionId > 0 && questionId <= this.questionsArr.length - 1) {
                 questionId++
                 for (let question of this.questionsArr) {
@@ -41,43 +42,56 @@ export default {
                     }
                 }
                 //handle duplicated route
-                if( this.$route.params.id == questionId ){
+                if (this.$route.params.id == questionId) {
                     questionId++
                     this.$router.push({ name: 'question', params: { id: questionId } })
-                }else{
+                } else {
                     this.$router.push({ name: 'question', params: { id: questionId } })
+                }
+                if (questionId == this.questionsArr.length) {
+                    this.$store.commit('setQuizStatue', { isFinished: true });
 
                 }
             }
         },
         prevBtn() {
-            let questionId =this.$route.params.id
-            console.log(questionId );
+            let questionId = this.$route.params.id
             if (questionId > 1 && questionId <= this.questionsArr.length) {
                 questionId--
                 for (let question of this.questionsArr) {
                     if (question.id == questionId) {
                         this.$store.commit('setnextQuestion', { nextQuestion: question });
                         this.$store.commit('setCurrentQuestionId', { currentQuestionId: questionId });
-
                     }
                 }
-                console.log(questionId);
                 this.$router.push({ name: 'question', params: { id: questionId } })
             }
 
         },
         resultBtn() {
-            console.log(this.answersArr);
             this.$store.commit('setQuestionAnswer', { questionAnswer: this.answersArr });
             this.$store.commit('setQuizStatue', { isFinished: true });
+
+            //commit result
+            for (let rowInfo of this.questionsArr) {
+                if (this.answersArr[rowInfo.id - 1]) {
+                    this.myResults.push({
+                        'The_Question': rowInfo.question,
+                        'Correct_Answer': rowInfo.correct_answer,
+                        'Your_Answer': !this.answersArr[rowInfo.id - 1] ? "no Answer" : this.answersArr[rowInfo.id - 1].answer,
+                        'Points': this.answersArr[rowInfo.id - 1].answer == rowInfo.correct_answer ? 1 : 0,
+                        'isCorrect': this.answersArr[rowInfo.id - 1].answer == rowInfo.correct_answer ? true : false,
+                    })
+                    this.answersArr[rowInfo.id - 1].answer == rowInfo.correct_answer ? this.totalPointes++ : this.totalPointes + 0
+                }
+            }
+            this.$store.commit('setResults', { userResults: this.myResults, score: this.totalPointes });
             this.$router.push({ name: 'result' })
         }
     },
     computed: {
         //get current question
         ...mapGetters(['getnextQuestion']),
-
     },
     mounted() {
         this.currentId = this.$route.params.id
@@ -93,10 +107,7 @@ export default {
         if (!this.currentQuestion.id) {
             window.onload = this.$router.push({ name: 'Home' })
             console.log(this.currentQuestion);
-
         }
     },
-    components: {
 
-    }
 }

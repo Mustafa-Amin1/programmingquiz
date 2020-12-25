@@ -2,20 +2,21 @@
 import { mapGetters } from 'vuex'
 
 export default {
-    name:'result',
+    name: 'result',
     data() {
         return {
-            answers:[]
+            fields: ['The_Question', 'Correct_Answer', 'Your_Answer', 'Points'],
+            results: [],
+            isCorrect: true
         }
     },
     computed: {
-        ...mapGetters(['gettQuestionAnswer']),
-
-    },
-    methods: {
-
+        ...mapGetters(['getResults']),
     },
     mounted() {
-       console.log(this.$store.getters.gettQuestionAnswer); 
+        //get results
+        this.results = this.$store.getters.getResults.userResults
+        console.log(this.$store.getters.getResults.userResults);
+        console.log(this.results);
     }
 }

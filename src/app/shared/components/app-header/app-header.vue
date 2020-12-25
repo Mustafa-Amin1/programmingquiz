@@ -17,9 +17,11 @@
           >
           <b-nav-item><a role="button" @click="nextBtn(getCurrentQuestionId)">Next</a></b-nav-item>
           <b-nav-item
-            ><b-link id="resultBtn" role="button" :disabled="isDisabled"
-              >Result</b-link
-            ></b-nav-item
+            >
+            <!-- <b-link id="resultBtn" > -->
+               <router-link id="resultBtn" to="/result" tag="b-link">Result</router-link>  
+               <!-- </b-link -->
+            </b-nav-item
           >
         </b-navbar-nav>
       </b-collapse>

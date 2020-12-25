@@ -19,14 +19,8 @@ export default {
                         this.$store.commit('setCurrentQuestionId', { currentQuestionId: questionId });
                     }
                 }
-                //handle duplicated route
-                // if( this.$route.params.id == questionId ){
-                    // this.$router.push({ name: 'question', params: { id: questionId++ } })
-                // }else{
                     this.$router.push({ name: 'question', params: { id: questionId } })
-                // }
             }
-
         },
         prevBtn() {
             let questionId =this.$route.params.id
@@ -42,6 +36,9 @@ export default {
         }
 
         },
+        // resultBtn() {
+        //     this.$router.push({ name: 'result' })
+        // }
     },
     computed:{
         ...mapGetters(['getnextQuestion']),
@@ -51,16 +48,25 @@ export default {
         
     },
     watch:{
+        getCurrentQuestionId:function(val){
+            if(val == this.getQuestions.length){
+                this.isDisabled = false
+            }
+        },
         isDisabled:function(val){
             console.log(val);
-            let btn = document.getElementById('resultBtn')
-            if(val == false){
-                btn.setAttribute('disabled',val)
-                btn.setAttribute('aria-disabled',val)
-            }else {
-                btn.removeAttribute('disabled')
-                btn.removeAttribute('aria-disabled')
+            if(this.$route.params == this.getQuestions.length){
+                val = false
+                console.log(val);
             }
+            // let btn = document.getElementById('resultBtn')
+            // if(val == false){
+            //     btn.setAttribute('disabled',val)
+            //     btn.setAttribute('aria-disabled',val)
+            // }else {
+            //     btn.removeAttribute('disabled')
+            //     btn.removeAttribute('aria-disabled')
+            // }
         }
     },
     mounted() {
