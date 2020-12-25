@@ -12,11 +12,13 @@
               <h2 class="mb-0">{{ getnextQuestion.question }}</h2>
             </template>
             <div id="card__body">
+              {{choosed.answer}}
               <div
                 class="card__body-item m-auto p-3 w-100"
                 v-for="(answer, index) in getnextQuestion.answers"
                 :key="index"
               >
+              
                 <div class="container-fluid">
                   <b-form-group class="row align-items-baseline">
                     <input

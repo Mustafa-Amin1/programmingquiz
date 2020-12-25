@@ -4,7 +4,7 @@
     <app-header></app-header>
 
     <!-- router view -->
-    <router-view :questionsArr="questionsArr" />
+    <router-view />
 
   </div>
 </template>
@@ -16,7 +16,6 @@ export default {
   name: "app",
   data() {
     return {
-      questionsArr:[],
     }
   },
   components: {

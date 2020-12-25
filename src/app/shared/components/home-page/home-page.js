@@ -33,6 +33,7 @@ export default {
         }
     },
     mounted() {
+        // reset state data
         this.$store.dispatch('resetState');
     }
 } 
