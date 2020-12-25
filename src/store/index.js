@@ -88,14 +88,12 @@ export default new Vuex.Store({
   actions: {
     getApiData(store) {
       let apiOptions = store.state.apiOptions
-      console.log(apiOptions);
-      console.log(`https://opentdb.com/api.php?amount=${apiOptions.amount}&category=18&difficulty=${apiOptions.difficulty}&type=multiple`);
       return axios.get(`https://opentdb.com/api.php?amount=${apiOptions.amount}&category=18&difficulty=${apiOptions.difficulty}&type=multiple`)
         .then(response => {
           for (let [index, result] of response.data.results.entries()) {
             result.id = index + 1
             //concat incorrect and correct answers
-            result.answers = [result.correct_answer, ...result.incorrect_answers]
+            result.answers = [result.correct_answer, ...result.incorrect_answers].sort(() => Math.random() - 0.5)
           }
           store.commit('setQuestions', response.data.results)
           return store.state.questions

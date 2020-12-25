@@ -2,7 +2,7 @@
   <div id="home">
     <div class="container">
       <b-form  v-if="show" @submit.prevent="startQuiz">
-         <b-form-group id="input-group-1" label="Choose difficulty:" label-for="input-3">
+         <b-form-group id="input-group-1" label="Difficulty:" label-for="input-3">
           <b-form-select
             id="input-3"
             v-model="form.difficulty"
@@ -10,7 +10,7 @@
             required
           ></b-form-select>
         </b-form-group>
-        <b-form-group id="input-group-2" label="Choose amount:" label-for="input-2">
+        <b-form-group id="input-group-2" label="Amount:" label-for="input-2">
           <b-form-select
             id="input-2"
             v-model="form.amount"

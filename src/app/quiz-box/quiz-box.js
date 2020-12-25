@@ -3,13 +3,15 @@ export default {
     name: 'quize-box',
     data() {
         return {
-            choosed: '',
+            choosed: {},
             currentQuestion: {},
             currentId: null,
             questionsArr: [],
             answersArr: [],
             myResults: [],
             totalPointes: 0,
+            prevBtnDisabled: false,
+            nextBtnDisabled: false,
         }
     },
     methods: {
@@ -18,6 +20,7 @@ export default {
                 number: number,
                 answer: answer
             }
+            //handle if user changed stored answer
             let storedAnswersNubmer = []
             for (let storedAnswer of this.answersArr) {
                 if (storedAnswer.number === answerObj.number) {
@@ -25,14 +28,13 @@ export default {
                 }
                 storedAnswersNubmer.push(storedAnswer.number)
             }
+            // store new answer
             if (storedAnswersNubmer.indexOf(answerObj.number) == -1) {
                 this.answersArr.push(answerObj)
             }
         },
         nextBtn() {
             let questionId = this.$route.params.id
-            // console.log(this.$store.getters.gettQuestionAnswer);
-            // this.choosed = this.answersArr[questionId-1].answer
             if (questionId > 0 && questionId <= this.questionsArr.length - 1) {
                 questionId++
                 for (let question of this.questionsArr) {
@@ -50,14 +52,11 @@ export default {
                 }
                 if (questionId == this.questionsArr.length) {
                     this.$store.commit('setQuizStatue', { isFinished: true });
-
                 }
             }
         },
         prevBtn() {
             let questionId = this.$route.params.id
-            // console.log(this.answersArr[questionId-1].answer);
-            // this.choosed = this.answersArr[questionId-1].answer
             if (questionId > 1 && questionId <= this.questionsArr.length) {
                 questionId--
                 for (let question of this.questionsArr) {
@@ -68,7 +67,6 @@ export default {
                 }
                 this.$router.push({ name: 'question', params: { id: questionId } })
             }
-
         },
         resultBtn() {
             this.$store.commit('setQuestionAnswer', { questionAnswer: this.answersArr });
@@ -105,18 +103,34 @@ export default {
             }
         }
 
-        // handle refresh page if no object or reloading go route to home page
+        // if no object or reloading route to home page
         if (!this.currentQuestion.id) {
             window.onload = this.$router.push({ name: 'Home' })
+            console.log(this.currentQuestion);
         }
     },
     beforeUpdate() {
+        //handle duplicated values
+        this.choosed.answer = ''
         let questionId = this.$route.params.id
-        console.log(questionId);
-        if(this.answersArr[questionId-1]){
-        this.choosed = this.answersArr[questionId-1].answer
 
+        //handle disable next button
+        if (questionId == this.questionsArr.length) {
+            this.nextBtnDisabled = true
+        } else {
+            this.nextBtnDisabled = false
         }
-    }
+
+        //handle disable prev button
+        if (questionId == 1) {
+            this.prevBtnDisabled = true
+        } else {
+            this.prevBtnDisabled = false
+        }
+        //get stored answer if there is
+        if (this.answersArr[questionId - 1]) {
+            this.choosed.answer = this.answersArr[questionId - 1].answer
+        }
+    },
 
 }

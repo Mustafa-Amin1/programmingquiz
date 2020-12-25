@@ -1,4 +1,3 @@
-
 export default {
     name: 'home-page',
     data() {
@@ -7,7 +6,7 @@ export default {
                 difficulty: null,
                 amount: null
             },
-            difficulty: [{ text: 'Select difficulty', value: null}, 'easy', 'hard', 'medium'],
+            difficulty: [{ text: 'Select difficulty', value: null }, 'easy', 'medium', 'hard'],
             amount: [{ text: 'Select amount', value: null }, '10', '20', '30'],
             show: true,
             questionsArr: []
@@ -34,6 +33,6 @@ export default {
         }
     },
     mounted() {
-    this.$store.dispatch('resetState');
-  }
+        this.$store.dispatch('resetState');
+    }
 } 

@@ -14,7 +14,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-
+  },
+  {
+    path: '/home',
+    name: 'homePage',
+    component: Home,
   },
   {
     path: '/question/:id',
@@ -27,18 +31,21 @@ const routes = [
     component: Result,
     beforeEnter(to,from,  next) {
       if(store.getters.getQuestions.length > 0){
-        if(store.getters.getResults.userResults.length > 0){
           if(store.getters.gettQuestionAnswer.length === store.getters.getQuestions.length) {
             next();
           }else{
             alert("you didn't finish your quiz")
           }
-        }else {
-          alert('you must submit your quiz by result button')
-        }
-        
       }else {
         alert('start your quiz to get your result')
+        //route to home page and handle if dublicated routing
+        router.push({ path: '/home' }).catch(err => {
+          if(err){
+            router.push({ path: '/' })
+          }
+        })
+
+
       }
 
     }

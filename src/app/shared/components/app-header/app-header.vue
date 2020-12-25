@@ -10,7 +10,6 @@
           <b-nav-item> <a role="button" @click="prevBtn">Previous</a> </b-nav-item>
           <b-nav-item>
             <i :class="{quizStatue1:gettQuizStatue}" class="fas fa-info-circle pr-2"></i>
-            <!-- <i class="fas fa-info-circle pr-2"></i> -->
             <i :class="{quizStatue2:gettQuizStatue}" class="quizStatue1 fas fa-check-circle pr-2"></i>
             {{ getCurrentQuestionId ? getCurrentQuestionId : "0" }} /
             {{ getQuestions.length }}</b-nav-item
@@ -18,9 +17,7 @@
           <b-nav-item><a role="button" @click="nextBtn(getCurrentQuestionId)">Next</a></b-nav-item>
           <b-nav-item
             >
-            <!-- <b-link id="resultBtn" > -->
                <router-link id="resultBtn" to="/result" tag="b-link">Result</router-link>  
-               <!-- </b-link -->
             </b-nav-item
           >
         </b-navbar-nav>

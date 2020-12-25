@@ -24,31 +24,22 @@
                       type="radio"
                       :id="'radio' + getnextQuestion.id + index"
                       :value="answer"
-                      v-model="choosed"
+                      v-model="choosed.answer"
                       @change="radioChoosed(answer, getnextQuestion.id)"
                     />
                     <label :for="'radio' + getnextQuestion.id + index" >
                       {{answer}}
                     </label>
-                    <!-- <b-form-radio
-                      :name="'radio' + getnextQuestion.id"
-                      v-model="choosed"
-                      :aria-describedby="ariaDescribedby"
-                      :value="answer"
-                      @change="radioChoosed(answer, getnextQuestion.id)"
-                      
-                      size="lg"
-                      >{{ answer }}</b-form-radio> -->
                   </b-form-group>
                 </div>
               </div>
             </div>
             <template #footer>
               <div class="row justify-content-start p-2 align-items-center">
-                <b-button class="mx-2" @click="prevBtn(getnextQuestion.id)"
+                <b-button class="mx-2" @click="prevBtn(getnextQuestion.id)" :disabled="prevBtnDisabled"
                   ><i class="fas fa-angle-left"></i> Previous</b-button
                 >
-                <b-button class="mx-2" @click="nextBtn(getnextQuestion.id)"
+                <b-button class="mx-2" @click="nextBtn(getnextQuestion.id)" :disabled="nextBtnDisabled"
                   ><i class="fas fa-angle-right"></i> Next</b-button
                 >
                 <b-button class="mx-2" @click="resultBtn(getnextQuestion.id)"
