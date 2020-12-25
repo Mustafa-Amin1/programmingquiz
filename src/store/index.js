@@ -4,19 +4,17 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
-
-
 export default new Vuex.Store({
   state: {
-    userResults:[],
-    questions:[],
-    questionLength:null,
-    nextQuestion:{},
-    currentQuestionId:0,
-    apiOptions:{},
-    questionAnswer:[],
-    isFinished:false,
-    score:0
+    userResults: [],
+    questions: [],
+    questionLength: null,
+    nextQuestion: {},
+    currentQuestionId: 0,
+    apiOptions: {},
+    questionAnswer: [],
+    isFinished: false,
+    score: 0
   },
   mutations: {
     setApiOptions(state, value) {
@@ -28,22 +26,34 @@ export default new Vuex.Store({
     setQuestionLength(state, value) {
       state.questionLength = value.questionLength
     },
-    setnextQuestion( state, value) {
+    setnextQuestion(state, value) {
       state.nextQuestion = value.nextQuestion
     },
-    setCurrentQuestionId( state, value) {
+    setCurrentQuestionId(state, value) {
       state.currentQuestionId = value.currentQuestionId
     },
-    setQuestionAnswer( state, value) {
+    setQuestionAnswer(state, value) {
       state.questionAnswer = value.questionAnswer
     },
-    setQuizStatue( state, value) {
+    setQuizStatue(state, value) {
       state.isFinished = value.isFinished
     },
     setResults(state, value) {
       state.userResults = value.userResults
       state.score = value.score
     },
+    // reset state when back to home
+    RESET_STATE(state) {
+      state.userResults = [],
+        state.questions = [],
+        state.questionLength = null,
+        state.nextQuestion = {},
+        state.currentQuestionId = 0,
+        state.apiOptions = {},
+        state.questionAnswer = [],
+        state.isFinished = false,
+        state.score = 0
+    }
   },
   getters: {
     getapiOptions: state => {
@@ -53,7 +63,7 @@ export default new Vuex.Store({
       return state.questions
     },
     getQuestionsLength: state => {
-      return  state.questionLength = state.questions.length
+      return state.questionLength = state.questions.length
     },
     getnextQuestion: state => {
       return state.nextQuestion
@@ -61,10 +71,10 @@ export default new Vuex.Store({
     ,
     getCurrentQuestionId: state => {
       return state.currentQuestionId
-    }  ,
+    },
     gettQuestionAnswer: state => {
       return state.questionAnswer
-    }  ,
+    },
     gettQuizStatue: state => {
       return state.isFinished
     },
@@ -74,25 +84,28 @@ export default new Vuex.Store({
         score: state.score,
       }
     }
-
   },
   actions: {
-      getApiData (store) {
-       let apiOptions = store.state.apiOptions
-       console.log(apiOptions);
-       console.log(`https://opentdb.com/api.php?amount=${apiOptions.amount}&category=18&difficulty=${apiOptions.difficulty}&type=multiple`);
-        return  axios.get(`https://opentdb.com/api.php?amount=${apiOptions.amount}&category=18&difficulty=${apiOptions.difficulty}&type=multiple`)
-          .then( response => {
-             for (let [index, result] of response.data.results.entries()) {
-              result.id = index+1
-              //concat incorrect and correct answers
-              result.answers =[result.correct_answer, ...result.incorrect_answers ]
-            }
-            store.commit('setQuestions', response.data.results)
-            return store.state.questions
-          })
-      }
-    
+    getApiData(store) {
+      let apiOptions = store.state.apiOptions
+      console.log(apiOptions);
+      console.log(`https://opentdb.com/api.php?amount=${apiOptions.amount}&category=18&difficulty=${apiOptions.difficulty}&type=multiple`);
+      return axios.get(`https://opentdb.com/api.php?amount=${apiOptions.amount}&category=18&difficulty=${apiOptions.difficulty}&type=multiple`)
+        .then(response => {
+          for (let [index, result] of response.data.results.entries()) {
+            result.id = index + 1
+            //concat incorrect and correct answers
+            result.answers = [result.correct_answer, ...result.incorrect_answers]
+          }
+          store.commit('setQuestions', response.data.results)
+          return store.state.questions
+        })
+    },
+    // reset state
+    resetState({ commit }) {
+      commit('RESET_STATE');
+    }
+
   },
 
 })

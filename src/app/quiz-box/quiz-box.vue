@@ -18,25 +18,31 @@
                 :key="index"
               >
                 <div class="container-fluid">
-                  <b-form-group
-                    v-slot="{ ariaDescribedby }"
-                    class="row align-items-baseline"
-                  >
-                    <b-form-radio
+                  <b-form-group class="row align-items-baseline">
+                    <input
+                      class="mr-2"
+                      type="radio"
+                      :id="'radio' + getnextQuestion.id + index"
+                      :value="answer"
+                      v-model="choosed"
+                      @change="radioChoosed(answer, getnextQuestion.id)"
+                    />
+                    <label :for="'radio' + getnextQuestion.id + index" >
+                      {{answer}}
+                    </label>
+                    <!-- <b-form-radio
                       :name="'radio' + getnextQuestion.id"
-                      v-model="choosed[getnextQuestion.id - 1]"
+                      v-model="choosed"
                       :aria-describedby="ariaDescribedby"
                       :value="answer"
                       @change="radioChoosed(answer, getnextQuestion.id)"
-                      checked
+                      
                       size="lg"
-                      >{{ answer }}</b-form-radio
-                    >
+                      >{{ answer }}</b-form-radio> -->
                   </b-form-group>
                 </div>
               </div>
             </div>
-            <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
             <template #footer>
               <div class="row justify-content-start p-2 align-items-center">
                 <b-button class="mx-2" @click="prevBtn(getnextQuestion.id)"

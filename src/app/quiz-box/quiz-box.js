@@ -3,7 +3,7 @@ export default {
     name: 'quize-box',
     data() {
         return {
-            choosed: [],
+            choosed: '',
             currentQuestion: {},
             currentId: null,
             questionsArr: [],
@@ -22,17 +22,17 @@ export default {
             for (let storedAnswer of this.answersArr) {
                 if (storedAnswer.number === answerObj.number) {
                     storedAnswer.answer = answerObj.answer
-                    console.log(storedAnswer.number);
                 }
                 storedAnswersNubmer.push(storedAnswer.number)
             }
             if (storedAnswersNubmer.indexOf(answerObj.number) == -1) {
                 this.answersArr.push(answerObj)
-
             }
         },
         nextBtn() {
             let questionId = this.$route.params.id
+            // console.log(this.$store.getters.gettQuestionAnswer);
+            // this.choosed = this.answersArr[questionId-1].answer
             if (questionId > 0 && questionId <= this.questionsArr.length - 1) {
                 questionId++
                 for (let question of this.questionsArr) {
@@ -56,6 +56,8 @@ export default {
         },
         prevBtn() {
             let questionId = this.$route.params.id
+            // console.log(this.answersArr[questionId-1].answer);
+            // this.choosed = this.answersArr[questionId-1].answer
             if (questionId > 1 && questionId <= this.questionsArr.length) {
                 questionId--
                 for (let question of this.questionsArr) {
@@ -103,11 +105,18 @@ export default {
             }
         }
 
-        // if no object or reloading route to home page
+        // handle refresh page if no object or reloading go route to home page
         if (!this.currentQuestion.id) {
             window.onload = this.$router.push({ name: 'Home' })
-            console.log(this.currentQuestion);
         }
     },
+    beforeUpdate() {
+        let questionId = this.$route.params.id
+        console.log(questionId);
+        if(this.answersArr[questionId-1]){
+        this.choosed = this.answersArr[questionId-1].answer
+
+        }
+    }
 
 }

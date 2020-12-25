@@ -6,8 +6,6 @@
     <!-- router view -->
     <router-view :questionsArr="questionsArr" />
 
-
-
   </div>
 </template>
 
